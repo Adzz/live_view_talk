@@ -1,0 +1,40 @@
+<section>
+  <h1 class="heading">Time Travel Tickets</h1>
+   <table class="table">
+    <tr>
+      <th>Name</th>
+      <th>Destination</th>
+      <th>Departure</th>
+    </tr>
+    <tr>
+      <td>Mike Wazowski</td>
+      <td>4th Dec 1985</td>
+      <td>1st Jan 2021</td>
+    </tr>
+    <%= for row <- @tickets do %>
+      <tr>
+        <td><%= row.name %></td>
+        <td><%= row.destination %></td>
+        <td><%= row.departure %></td>
+      </tr>
+    <% end %>
+  </table>
+  <button>Create Ticket</button>
+
+  <%= if @create_modal do %>
+    <section class="modal">
+      <section class="modal-content">
+        <h3>Book a ticket</h3>
+        <form>
+          <input type="text" name="name" placeholder="Enter traveller name...">
+          <input type="text" name="departure" placeholder="Enter Departure date...">
+          <input type="text" name="destination" placeholder="Enter Destination date...">
+        </form>
+        <section>
+          <button class="cancel-btn">Cancel</button>
+          <button class="save-btn">Save</button>
+        </section>
+      </section>
+    </section>
+  <% end %>
+</section>
