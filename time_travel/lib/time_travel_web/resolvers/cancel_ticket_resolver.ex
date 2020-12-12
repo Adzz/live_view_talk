@@ -1,15 +1,13 @@
 defmodule TimeTravelWeb.CancelTicketResolver do
   alias TimeTravel.Ticket
-
-  # The benefit of having this resolver, rather than having this stuff live in the PageLive
-  # module is that now we can call it from a anywhere. What if we have a cron route triggered
-  # via a webhook, now our controller can just call this, sending in the right params. Yay.
+  alias TimeTravelWeb.TicketsResovler.Utils
 
   def assigns(params) do
     Domain.Request.new(params)
     |> Domain.Request.add_steps([
+      &Domain.Request.validate(&1, fn state -> Utils.authorize(state) end),
       &Domain.Request.add_to_state(&1, :ticket, fn state -> Ticket.delete(state) end),
-      &TimeTravelWeb.TicketsResovlerUtils.refetch_tickets/1
+      &TimeTravelWeb.TicketsResovler.Utils.refetch_tickets/1
     ])
     |> Domain.Request.fail_fast()
     |> to_assigns()

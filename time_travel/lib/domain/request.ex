@@ -18,7 +18,7 @@ defmodule Domain.Request do
     end
   end
 
-  def add_steps(request = %__MODULE__{}, steps, options \\ []) do
+  def add_steps(request = %__MODULE__{}, steps) do
     Enum.reduce(steps, request, fn
       {step, options}, acc -> add_step(acc, step, options)
       step, acc -> add_step(acc, step, [])
@@ -43,6 +43,13 @@ defmodule Domain.Request do
         {:error, message} -> {:halt, {:error, message}}
       end
     end)
+  end
+
+  def validate(request, validation_fun) do
+    case validation_fun.(request.state) do
+      {:ok, _} -> {:ok, request}
+      error = {:error, _} -> error
+    end
   end
 
   def unwrap(req = %{valid?: true}, on_success, _on_error), do: on_success.(req)

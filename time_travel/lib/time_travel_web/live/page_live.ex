@@ -3,13 +3,20 @@ defmodule TimeTravelWeb.PageLive do
   require Logger
 
   @impl true
-  def mount(_params, _session, socket) do
-    assigns = %{
-      create_modal_open?: false,
-      tickets: TimeTravel.Ticket.all()
-    }
+  # A plug further up puts the token in.
+  def mount(_params, session, socket) do
+    session = %{"user_token" => "hi"}
+    with %{"user_token" => token} <- session do
+      assigns = %{
+        create_modal_open?: false,
+        tickets: TimeTravel.Ticket.all(),
+        user: TimeTravel.User.get_user_by_session_token(token)
+      }
 
-    {:ok, assign(socket, assigns)}
+      {:ok, assign(socket, assigns)}
+    else
+      _ -> raise "Nope!"
+    end
   end
 
   @impl true
@@ -26,13 +33,15 @@ defmodule TimeTravelWeb.PageLive do
 
   @impl true
   def handle_event("book_ticket", params, socket) do
-    assigns = TimeTravelWeb.BookTicketResolver.assigns(params)
+    state = Map.merge(params, %{"user" => socket.assigns.user})
+    assigns = TimeTravelWeb.BookTicketResolver.assigns(state)
     {:noreply, assign(socket, assigns)}
   end
 
   @impl true
   def handle_event("cancel_ticket", params, socket) do
-    assigns = TimeTravelWeb.CancelTicketResolver.assigns(params)
+    state = Map.merge(params, %{"user" => socket.assigns.user})
+    assigns = TimeTravelWeb.CancelTicketResolver.assigns(state)
     {:noreply, assign(socket, assigns)}
   end
 
