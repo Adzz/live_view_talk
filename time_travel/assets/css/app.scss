@@ -122,13 +122,16 @@
 .cancel-btn, .save-btn {
   width: 125px;
 }
+
 .cancel-btn {
   background-color: hotpink;
   border-color: hotpink;
   margin-right: 10px;
 }
 
-
+.buttons {
+  float: right;
+}
 
 
 
