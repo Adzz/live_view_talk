@@ -6,10 +6,15 @@ defmodule TimeTravelWeb.CancelTicketResolver do
   # via a webhook, now our controller can just call this, sending in the right params. Yay.
 
   def assigns(params) do
-    with {:ok, _ticket} <- Ticket.delete(params) do
-      %{tickets: Ticket.all()}
-    else
-      {:error, _changeset} -> %{}
-    end
+    Domain.Request.new(params)
+    |> Domain.Request.add_steps([
+      &Domain.Request.add_to_state(&1, :ticket, fn state -> Ticket.delete(state) end),
+      &TimeTravelWeb.TicketsResovlerUtils.refetch_tickets/1
+    ])
+    |> Domain.Request.fail_fast()
+    |> to_assigns()
   end
+
+  def to_assigns({:error, _changeset}), do: %{}
+  def to_assigns(request), do: %{tickets: request.state.tickets}
 end
