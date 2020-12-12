@@ -5,17 +5,14 @@
       <th>Name</th>
       <th>Destination</th>
       <th>Departure</th>
-    </tr>
-    <tr>
-      <td>Mike Wazowski</td>
-      <td>4th Dec 1985</td>
-      <td>1st Jan 2021</td>
+      <th></th>
     </tr>
     <%= for row <- @tickets do %>
       <tr>
         <td><%= row.name %></td>
         <td><%= row.destination %></td>
         <td><%= row.departure %></td>
+        <td phx-click="cancel_ticket" phx-value-id="<%= row.id %>" class="delete-btn">X</td>
       </tr>
     <% end %>
   </table>

@@ -10,6 +10,10 @@ defmodule TimeTravel.Ticket do
     |> Ecto.Changeset.validate_required([:name, :departure, :destination])
   end
 
+  def delete(%{"id" => id}) do
+    TimeTravel.Repo.delete(%Ticket{id: id})
+  end
+
   def all() do
     TimeTravel.Repo.all(TimeTravel.Schemas.Ticket)
   end

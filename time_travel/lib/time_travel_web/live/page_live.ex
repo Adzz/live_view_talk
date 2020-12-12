@@ -6,7 +6,7 @@ defmodule TimeTravelWeb.PageLive do
   def mount(_params, _session, socket) do
     assigns = %{
       create_modal_open?: false,
-      tickets: [%{name: "ted Bundy", destination: "1973", departure: "now"}]
+      tickets: TimeTravel.Ticket.all()
     }
 
     {:ok, assign(socket, assigns)}
@@ -26,13 +26,13 @@ defmodule TimeTravelWeb.PageLive do
 
   @impl true
   def handle_event("book_ticket", params, socket) do
-    # Now traditionally you would introduce a Phoenix Context here.
-    # That's essentially a place to co-locate all the business logic for
-    # a particular action or entity. Let's look at that approach.
-
-    # I'm introducing a resolver here who's job it is to return assigns
-    # for the given action - successful or not.
     assigns = TimeTravelWeb.BookTicketResolver.assigns(params)
+    {:noreply, assign(socket, assigns)}
+  end
+
+  @impl true
+  def handle_event("cancel_ticket", params, socket) do
+    assigns = TimeTravelWeb.CancelTicketResolver.assigns(params)
     {:noreply, assign(socket, assigns)}
   end
 
