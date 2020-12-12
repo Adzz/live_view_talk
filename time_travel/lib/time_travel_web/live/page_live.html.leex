@@ -19,7 +19,7 @@
       </tr>
     <% end %>
   </table>
-  <button>Create Ticket</button>
+  <button phx-click="open_modal">Create Ticket</button>
 
   <%= if @create_modal do %>
     <section class="modal">
