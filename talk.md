@@ -1,7 +1,4 @@
-### State Management in LiveView
-              or
-### The (absolute) state of LiveView
-
+### The (absolute) State of LiveView
 
 Contents
 
