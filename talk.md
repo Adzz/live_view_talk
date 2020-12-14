@@ -61,10 +61,35 @@ Powerful - I can now make changes that affect lots of things -> like add tracing
 Manifest - what's happening is easy to understand - it's a reduce_while.
 
 
+### Components
+
+You have a decision.
+
+1. A new process - can be expensive. Like a new live view for each ticket would probably quickly become expensive.
+2. Define a component that doesn't manage it's own state - and have the parent manage that.
+3. Have a LiveComponent that handles it's own state but runs in the same process as the parent LiveView. Meaning best of both?
 
 
+#### Just a normal Function
 
+Example - pull button out, re-use for cancel etc.
 
+#### Stateless component
+
+Pull modal out, parent owns the state.
+
+#### Stateful Component
+
+Component owns it, parent process though.
+
+#### Different LiveView
+
+New process. Death in the process does not affect the parent. Blimey, what a sentence.
+
+#### Surface - An alternative syntax for some of the above
+
+Seems to help remove some boiler plate.
+Has a possibility of pre-built components like what you can get with material design / Material UI for example.... Although they also seem possible regardless.
 
 
 

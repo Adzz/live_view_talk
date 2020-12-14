@@ -16,7 +16,7 @@
       </tr>
     <% end %>
   </table>
-  <button test-id="modal-open-btn" phx-click="open_modal">Create Ticket</button>
+  <%= Button.tag(%{test_id: "modal-open-btn", on_click: "open_modal", button_text: "Create Ticket"}) %>
 
   <%= if @create_modal_open? do %>
     <section class="modal" test-id="create-modal">
