@@ -5,7 +5,9 @@ defmodule TimeTravelWeb.PageLive do
   @impl true
   # A plug further up puts the token in.
   def mount(_params, session, socket) do
+    # in reality we would not do this obviously:
     session = %{"user_token" => "hi"}
+
     with %{"user_token" => token} <- session do
       assigns = %{
         create_modal_open?: false,

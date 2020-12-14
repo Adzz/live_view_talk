@@ -16,10 +16,10 @@
       </tr>
     <% end %>
   </table>
-  <button phx-click="open_modal">Create Ticket</button>
+  <button test-id="modal-open-btn" phx-click="open_modal">Create Ticket</button>
 
   <%= if @create_modal_open? do %>
-    <section class="modal">
+    <section class="modal" test-id="create-modal">
       <section class="modal-content">
         <h3>Book a ticket</h3>
         <form phx-submit="book_ticket">
