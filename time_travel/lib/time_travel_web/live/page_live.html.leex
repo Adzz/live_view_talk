@@ -18,5 +18,7 @@
   </table>
   <%= Button.tag(%{test_id: "modal-open-btn", on_click: "open_modal", button_text: "Create Ticket"}) %>
   <%# If we add an id it's stateful, gets extra lifecycle events and assigns (@myself) %>
-  <%= live_component(@socket, Stateful.CreateModal, id: "my_stateful_modal", is_open?: @create_modal_open?) %>
+  <%= if @create_modal_open? do %>
+    <%= live_component(@socket, Stateful.CreateModal, id: "my_stateful_modal") %>
+  <% end %>
 </section>

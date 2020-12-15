@@ -28,16 +28,18 @@ So we have a vague mental model of what live view is. Let's look at an example.
 
 We are Duffel so we are making travel painless. So naturally that includes Time Travel.
 
-Our app is going to let us buy tickets for time travel / list previous journies. Whenever we make a change in our app, we need to ensure that we can't edit the past. So past tickets can't be changed, past seating arrangements can't be changed. Past passenger names, luggage allowances... cannot be changed.
+Our app is going to let us buy tickets for time travel and list previous journeys. We can delete and edit a ticket.
 
-That means we have business logic spanning contexts, spanning events / actions that we can take.
+Now there is some FE exclusive state - show / hide the modal. There is also essential business logic, like for example
+authorization and deadlines around when you can edit a ticket.
 
+We can imagine that each travel provider sets a deadline for edits that may be different from each other. That is probably kept in the code rather than a db and there should be a single source of truth for it in the codebase.
 
-The problem we need to get to is a sharing of business logic across contexts. Authorisation is a good example but also time based issues a la HM. Also tracing.
+So where someone looks for the date of travel in the XML is going to differ between airlines but the logic of "don't allow edits after this date" is not. So the part we can re-use is "don't edit after this date", we just have to have a step that extracts the correct date for each travel provider.
 
-Thinking of it like middleware can give us extra benefits too; we can process that middleware with different semantics. Like, fail fast, collect errors, with / rollback...
+Essentially what I'm getting at is we have business logic spanning contexts; spanning events / actions that we can take. That means a changeset or even a Multi doesn't necessarily feel like a good fit. Sagas get closer but I am not yet convinced that a Saga is the right place way to add tracing for example. They feel like they are more about trying to enable distributed transactions.
 
-We'll come back and finalize the example when we know what we are doing with it.
+Thinking of it like middleware can give us extra benefits too; we can process that middleware with different semantics. Like, fail fast, collect errors, with rollback or not...
 
 ### Changesets, Multis and Sagas.
 
@@ -85,6 +87,8 @@ Pull modal out, parent owns the state.
 
 Have more lifecycle functions. Exist still in the parent process. Have their own state.
 Component owns it, parent process though.
+
+Example might be toggling between a return and a single in the create modal UI.
 
 #### Different LiveView
 
