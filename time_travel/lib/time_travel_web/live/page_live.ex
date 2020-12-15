@@ -1,7 +1,8 @@
 defmodule TimeTravelWeb.PageLive do
   use TimeTravelWeb, :live_view
   require Logger
-  alias TimeTravelWeb.Components.Button
+  alias TimeTravelWeb.Components.UI.Button
+  alias TimeTravelWeb.Components.Stateless.CreateModal
 
   @impl true
   # A plug further up puts the token in.

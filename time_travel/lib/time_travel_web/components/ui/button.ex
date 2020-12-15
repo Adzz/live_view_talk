@@ -1,4 +1,4 @@
-defmodule TimeTravelWeb.Components.Button do
+defmodule TimeTravelWeb.Components.UI.Button do
   import Phoenix.LiveView.Helpers
 
   @doc """

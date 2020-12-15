@@ -76,10 +76,14 @@ Example - pull button out, re-use for cancel etc.
 
 #### Stateless component
 
+Have their own lifecycle. They are called with live_component. Exist in the parent
+process and don't have any state of their own.
+
 Pull modal out, parent owns the state.
 
 #### Stateful Component
 
+Have more lifecycle functions. Exist still in the parent process. Have their own state.
 Component owns it, parent process though.
 
 #### Different LiveView

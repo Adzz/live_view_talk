@@ -19,19 +19,6 @@
   <%= Button.tag(%{test_id: "modal-open-btn", on_click: "open_modal", button_text: "Create Ticket"}) %>
 
   <%= if @create_modal_open? do %>
-    <section class="modal" test-id="create-modal">
-      <section class="modal-content">
-        <h3>Book a ticket</h3>
-        <form phx-submit="book_ticket">
-          <input type="text" name="name" placeholder="Enter traveller name...">
-          <input type="text" name="departure" placeholder="Enter Departure date...">
-          <input type="text" name="destination" placeholder="Enter Destination date...">
-          <section class="buttons">
-            <button class="cancel-btn" phx-click="close_modal">Cancel</button>
-            <button class="save-btn">Save</button>
-          </section>
-        </form>
-      </section>
-    </section>
+    <%= live_component(@socket, CreateModal) %>
   <% end %>
 </section>
